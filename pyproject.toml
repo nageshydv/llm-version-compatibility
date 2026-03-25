@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "prompt-compat"
+version = "0.1.0"
+description = "CI-style backward compatibility testing for prompt templates across Claude model versions"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Nagesh Yadav", email = "nagesh@agentictech.com" },
+]
+keywords = ["llm", "prompt-engineering", "regression-testing", "claude", "anthropic", "backward-compatibility"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "anthropic>=0.40.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.20.0",
+    "rich>=13.0.0",
+    "click>=8.1.0",
+    "jinja2>=3.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-mock>=3.12.0",
+    "ruff>=0.4.0",
+]
+semantic = [
+    "numpy>=1.26.0",
+]
+
+[project.scripts]
+prompt-compat = "prompt_compat.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/prompt_compat"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "templates/", "docs/", "README.md", "LICENSE"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
